@@ -197,6 +197,10 @@
                         {%- set uri = '%s/v%s/%s_v%s'|format(p.uri_a, p.version, i, p.version) %}
                         {%- set url = '%s_%s_%s.%s'|format(uri, grains.kernel|lower, arch, p.suffix) %}
 
+                    {%- elif i in ('helm',) %}
+                        {%- set arch = 'amd64' if d.arch == 'x86_64' else d.arch %}
+                        {%- set url = '%s/%s-v%s-%s-%s.%s'|format(p.uri_a, i, p.version, grains.kernel|lower, arch, p.suffix) %}
+
                     {%- elif i in ('stern',) %}
                         {%- set arch = 'amd64' if i in ('stern',) and d.arch == 'x86_64' else d.arch %}
                         {%- set url = '%s/%s/%s_%s_%s'|format(p.uri_a, p.version, i, grains.kernel, arch) %}

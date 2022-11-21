@@ -60,6 +60,7 @@ kubernetes:
       - devspace
       - dive
       - istio
+      - helm
       - kubectx
       - kubens
       - kudo
@@ -165,6 +166,16 @@ kubernetes:
         suffix: ''
         container:
           image: heriet/stern
+      helm:
+        version: 3.10.2
+        commands:
+          - helm
+        use_upstream: archive
+        uri_a: 'https://get.helm.sh'
+        archive:
+          source_hash: '2315941a13291c277dac9f65e75ead56386440d3907e0540bf157ae70f188347'  # noqa 204
+          options: ''
+        suffix: tar.gz
       kubectx:
         version: 0.9.4
         commands:

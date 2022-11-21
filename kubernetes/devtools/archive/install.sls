@@ -52,23 +52,22 @@ kubernetes-devtools-archive-{{ tool }}-install:
   cmd.run:
     - name: mv {{ d.dir.base ~ d.div ~ 'bin' ~ d.div }}{{ tool }} {{ d.dir.base ~ d.div ~ 'bin' ~ d.div }}{{ tool }}.exe
     - onlyif: test -f {{ d.dir.base ~ d.div ~ 'bin' ~ d.div }}{{ tool }}
-
                          {%- endif %}
-                         {%- if d.linux.altpriority|int == 0 or grains.os_family in ('Arch', 'MacOS') %}
-                             {%- for cmd in d.devtools['pkg'][tool]['commands']|unique %}
+                     {%- endif %}
+                     {%- if d.linux.altpriority|int == 0 or grains.os_family in ('Arch', 'MacOS') %}
+                         {%- for cmd in d.devtools['pkg'][tool]['commands']|unique %}
 
 kubernetes-devtools-archive-{{ tool }}-install-symlink-{{ cmd }}:
   file.symlink:
     - name: /usr/local/bin/{{ cmd }}
-    - target: {{ d.devtools['pkg'][tool]['path'] }}/bin/{{ cmd }}
+    - target: {{ d.devtools['pkg'][tool]['path'] }}/{{ cmd }}
     - force: True
     - onlyif:
-      - test -f {{ d.devtools['pkg'][tool]['path'] }}/bin/{{ cmd }}
+      - test -f {{ d.devtools['pkg'][tool]['path'] }}/{{ cmd }}
     - require:
       - archive: kubernetes-devtools-archive-{{ tool }}-install
 
-                             {%- endfor %}
-                         {%- endif %}
+                         {%- endfor %}
                      {%- endif %}
                {%- endif %}
             {%- endif %}
